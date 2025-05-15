@@ -1,6 +1,6 @@
 # 📦 Components
 
-Esta pasta contém os componentes reutilizáveis da interface do projeto.
+Esta pasta contém os componentes reutilizáveis da interface do bookhair. Aqui voce encontra as propriedades disponiveis, variações caso possua e exemplos de uso.
 
 ---
 
