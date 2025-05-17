@@ -1,3 +1,8 @@
+import 'package:bookhair/components/appointment_card.dart';
+import 'package:bookhair/components/barbershop_carousel.dart';
+import 'package:bookhair/components/button.dart';
+import 'package:bookhair/components/input.dart';
+import 'package:bookhair/models/barbershop.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,74 +11,131 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BookHair'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Button(
+                text: 'Primario',
+                variant: ButtonVariant.primary,
+                onPressed: () {},
               ),
-              child: ListTile(
-                leading: const Icon(Icons.calendar_today, color: Colors.blue),
-                title: const Text('Próximo agendamento'),
-                subtitle: const Text('Corte com João às 14:00h'),
+              const SizedBox(height: 12),
+              Button(
+                text: 'Outline',
+                variant: ButtonVariant.outline,
+                onPressed: () {},
               ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Barbearias Populares',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            _buildBarbeariaTile(
-              context,
-              nome: 'Barbearia do Zé',
-              endereco: 'Av. Central, 234 - Centro',
-              imagem: 'https://i.pravatar.cc/150?img=10',
-            ),
-            _buildBarbeariaTile(
-              context,
-              nome: 'Top Fade Barber',
-              endereco: 'Rua das Flores, 120',
-              imagem: 'https://i.pravatar.cc/150?img=12',
-            ),
-            _buildBarbeariaTile(
-              context,
-              nome: 'Barbearia Estilo',
-              endereco: 'Praça da Liberdade, 89',
-              imagem: 'https://i.pravatar.cc/150?img=13',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBarbeariaTile(BuildContext context,
-      {required String nome, required String endereco, required String imagem}) {
-    return Column(
-      children: [
-        ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(imagem),
+              const SizedBox(height: 12),
+              Button(
+                text: '',
+                variant: ButtonVariant.ghost,
+                icon: Icons.message_outlined,
+                onPressed: () {},
+              ),
+              const SizedBox(height: 12),
+              CustomInput(
+                hintText: 'Pesquisar',
+                icon: Icons.search,
+                actionIcon: Icons.map,
+                type: InputType.search,
+                onActionPressed: () {
+                  print('Mapa');
+                },
+              ),
+              const SizedBox(height: 12),
+              CustomInput(
+                label: 'Usuário',
+                hintText: 'E-mail',
+                icon: Icons.mail_outline,
+              ),
+              const SizedBox(height: 12),
+              CustomInput(
+                label: 'Senha',
+                hintText: 'Senha',
+                icon: Icons.vpn_key_outlined,
+                type: InputType.password,
+              ),
+              const SizedBox(height: 24),
+              BarbershopCarousel(
+                barbershops: [
+                  Barbershop(
+                    name: 'Vintage Barber',
+                    address: 'Av. São Sebastião, 357...',
+                    imageUrl: 'https://link-da-imagem.jpg',
+                    rating: 4.8,
+                  ),
+                  Barbershop(
+                    name: 'Vintage Barber',
+                    address: 'Av. São Sebastião, 357...',
+                    imageUrl: 'https://link-da-imagem.jpg',
+                    rating: 4.8,
+                  ),
+                  Barbershop(
+                    name: 'Vintage Barber',
+                    address: 'Av. São Sebastião, 357...',
+                    imageUrl: 'https://link-da-imagem.jpg',
+                    rating: 4.8,
+                  ),
+                  Barbershop(
+                    name: 'Vintage Barber',
+                    address: 'Av. São Sebastião, 357...',
+                    imageUrl: 'https://link-da-imagem.jpg',
+                    rating: 4.8,
+                  ),
+                  Barbershop(
+                    name: 'Vintage Barber',
+                    address: 'Av. São Sebastião, 357...',
+                    imageUrl: 'https://link-da-imagem.jpg',
+                    rating: 4.8,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              AppointmentCard(
+                dateTime: DateTime(2025, 2, 22, 10, 0),
+                status: 'Concluído',
+                barbershopName: 'Barbearia exemplo',
+                address: '105 Av. 10a, Centro Rio Claro - SP',
+                services: 'Corte de cabelo + Barba',
+                imageUrl: 'https://link-da-imagem.jpg',
+              ),
+              const SizedBox(height: 12),
+              AppointmentCard(
+                dateTime: DateTime(2025, 2, 22, 10, 0),
+                status: 'Cancelado',
+                barbershopName: 'Barbearia exemplo',
+                address: '105 Av. 10a, Centro Rio Claro - SP',
+                services: 'Corte de cabelo + Barba',
+                imageUrl: 'https://link-da-imagem.jpg',
+              ),
+              const SizedBox(height: 12),
+              AppointmentCard(
+                dateTime: DateTime(2025, 2, 22, 10, 0),
+                status: 'Confirmado',
+                barbershopName: 'Barbearia exemplo',
+                address: '105 Av. 10a, Centro Rio Claro - SP',
+                services: 'Corte de cabelo + Barba',
+                imageUrl: 'https://link-da-imagem.jpg',
+              ),
+              const SizedBox(height: 12),
+              AppointmentCard(
+                dateTime: DateTime(2025, 4, 03, 18, 30),
+                status: 'Confirmado',
+                barbershopName: 'Barbearia exemplo',
+                address: '105 Av. 10a, Centro Rio Claro - SP',
+                services: 'Corte de cabelo + Barba',
+                imageUrl: 'https://link-da-imagem.jpg',
+                showActions: true, // ESSENCIAL
+                onCancel: () => print('Cancelar agendamento'),
+                onMessage: () => print('Abrir chat'),
+              ),
+            ],
           ),
-          title: Text(nome),
-          subtitle: Text(endereco),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () {
-            // Ação ao tocar na barbearia
-          },
         ),
-        const Divider(),
-      ],
+      ),
     );
   }
 }

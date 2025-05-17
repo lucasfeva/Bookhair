@@ -13,4 +13,17 @@ class AppColors {
   static const slate850 = Color(0xFF1B354C);
   static const slate900 = Color(0xFF102535);
   static const slate950 = Color(0xFF08121A);
+
+  static const gray50 = Color(0xFFFAFAFA);
+  static const gray100 = Color(0xFFE4E4E7);
+  static const gray200 = Color(0xFFD4D4D8);
+  static const gray300 = Color(0xFF9F9FA9);
+  static const gray400 = Color(0xFF71717B);
+  static const gray500 = Color(0xFF52525C);
+  static const gray600 = Color(0xFF3F3F46);
+  static const gray700 = Color(0xFF27272A);
+  static const gray800 = Color(0xFF1E1E20);
+  static const gray850 = Color(0xFF18181B);
+  static const gray900 = Color(0xFF141416);
+  static const gray950 = Color(0xFF09090B);
 }
