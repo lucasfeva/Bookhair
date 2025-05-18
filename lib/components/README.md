@@ -164,3 +164,71 @@ BarbershopCarousel(
   ],
 )
 ```
+
+---
+
+## 📅 AppointmentCard
+
+O `AppointmentCard` é um componente visual que exibe as informações de um agendamento com uma barbearia. Ele pode ser utilizado em duas variações:
+
+- **Na Home**: exibe os botões "Cancelar" e "Mensagem" se o status for `"Confirmado"`.
+- **Na tela de Agendamentos**: exibe apenas o status visual (ex: `"Concluído"`), sem botões.
+
+---
+
+### Propriedades
+
+- `dateTime`: data e hora do agendamento (`DateTime`)
+- `status`: texto que representa o status do agendamento (`"Confirmado"`, `"Concluído"`, `"Cancelado"`)
+- `barbershopName`: nome da barbearia
+- `address`: endereço do local
+- `services`: descrição dos serviços realizados
+- `imageUrl`: URL da imagem da barbearia
+- `showActions` (opcional): se `true`, exibe os botões "Cancelar" e "Mensagem" (normalmente usado apenas se `status == "Confirmado"`)
+- `onCancel` (opcional): função executada ao clicar no botão "Cancelar"
+- `onMessage` (opcional): função executada ao clicar no botão "Mensagem"
+
+---
+
+### Estilos por status
+
+- **Confirmado**: texto azul com fundo azul claro (10% de opacidade)
+- **Concluído**: texto verde com fundo verde claro (10% de opacidade)
+- **Cancelado**: texto vermelho com fundo vermelho claro (10% de opacidade)
+
+---
+
+### Exemplo de uso (com status visual)
+
+```dart
+AppointmentCard(
+  dateTime: DateTime(2025, 2, 22, 10, 0),
+  status: 'Concluído',
+  barbershopName: 'Barbearia exemplo',
+  address: '105 Av. 10a, Centro Rio Claro - SP',
+  services: 'Corte de cabelo + Barba',
+  imageUrl: 'https://link-da-imagem.jpg',
+)
+```
+
+### Exemplo de uso (com botões de ação)
+
+```dart
+AppointmentCard(
+  dateTime: DateTime(2025, 4, 03, 18, 30),
+  status: 'Confirmado',
+  barbershopName: 'Barbearia exemplo',
+  address: '105 Av. 10a, Centro Rio Claro - SP',
+  services: 'Corte de cabelo + Barba',
+  imageUrl: 'https://link-da-imagem.jpg',
+  showActions: true,
+  onCancel: () => print('Cancelar agendamento'),
+  onMessage: () => print('Abrir chat'),
+)
+```
+
+### Observações
+
+- A data e horário são exibidos no formato `22 Fev 2025 • 10:00`.
+- Quando a imagem falhar ao carregar, um ícone padrão é mostrado com fundo cinza.
+- Os botões de ação aparecem apenas se `showActions` for `true`.

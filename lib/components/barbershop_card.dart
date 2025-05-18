@@ -87,10 +87,12 @@ class BarbershopCard extends StatelessWidget {
               children: [
                 Text(
                   name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: AppColors.gray900,
+                    color: AppColors.gray950,
                   ),
                 ),
                 const SizedBox(height: 4),
