@@ -2,6 +2,7 @@ import 'package:bookhair/components/appointment_card.dart';
 import 'package:bookhair/components/barbershop_carousel.dart';
 import 'package:bookhair/components/button.dart';
 import 'package:bookhair/components/input.dart';
+import 'package:bookhair/components/service_item.dart';
 import 'package:bookhair/models/barbershop.dart';
 import 'package:flutter/material.dart';
 
@@ -131,6 +132,16 @@ class HomeScreen extends StatelessWidget {
                 showActions: true, // ESSENCIAL
                 onCancel: () => print('Cancelar agendamento'),
                 onMessage: () => print('Abrir chat'),
+              ),
+              const SizedBox(height: 12),
+              Column(
+                children: const [
+                  ServiceItem(name: 'Cabelo', price: 'R\$ 30,00'),
+                  ServiceItem(name: 'Cabelo + Barba', price: 'R\$ 45,00'),
+                  ServiceItem(name: 'Barba', price: 'R\$ 15,00'),
+                  ServiceItem(name: 'Alisamento masculino', price: 'R\$ 60,00'),
+                  ServiceItem(name: 'Raspado', price: 'R\$ 15,00'),
+                ],
               ),
             ],
           ),
