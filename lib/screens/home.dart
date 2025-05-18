@@ -4,6 +4,7 @@ import 'package:bookhair/components/button.dart';
 import 'package:bookhair/components/input.dart';
 import 'package:bookhair/components/service_item.dart';
 import 'package:bookhair/models/barbershop.dart';
+import 'package:bookhair/screens/barbershop.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -93,6 +94,14 @@ class HomeScreen extends StatelessWidget {
                     rating: 4.8,
                   ),
                 ],
+                onTap: (barbershop) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BarbershopScreen(barbershop: barbershop),
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 24),
               AppointmentCard(
