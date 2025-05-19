@@ -1,84 +1,105 @@
+import 'package:bookhair/data/constants/colors.dart';
 import 'package:flutter/material.dart';
-import '../data/constants/colors.dart';
 
-enum ButtonVariant { primary, outline, ghost }
+enum InputType { search, text, password }
 
-class Button extends StatelessWidget {
-  final String text;
-  final ButtonVariant variant;
-  final VoidCallback? onPressed;
-  final IconData? icon;
+class CustomInput extends StatefulWidget {
+  final String label;
+  final String hintText;
+  final IconData icon;
+  final IconData? actionIcon;
+  final InputType type;
+  final VoidCallback? onActionPressed;
+  final TextEditingController? controller;
 
-  const Button({
+  const CustomInput({
     super.key,
-    required this.text,
-    this.variant = ButtonVariant.primary,
-    this.onPressed,
-    this.icon,
+    this.label = '',
+    required this.hintText,
+    required this.icon,
+    this.actionIcon,
+    this.type = InputType.text,
+    this.onActionPressed,
+    this.controller,
   });
 
   @override
+  State<CustomInput> createState() => _CustomInputState();
+}
+
+class _CustomInputState extends State<CustomInput> {
+  bool obscureText = true;
+
+  @override
   Widget build(BuildContext context) {
-    final isPrimary = variant == ButtonVariant.primary;
-    final isOutline = variant == ButtonVariant.outline;
-    final isGhost = variant == ButtonVariant.ghost;
+    final isPassword = widget.type == InputType.password;
+    final isSearch = widget.type == InputType.search;
 
-    final buttonChild = Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (icon != null)
-          Icon(
-            icon,
-            size: 18,
-            color: isPrimary ? Colors.white : AppColors.slate500,
+        if (widget.label.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Text(widget.label),
           ),
-        if (icon != null && text.isNotEmpty) const SizedBox(width: 8),
-        if (text.isNotEmpty)
-          Text(
-            text,
-            style: TextStyle(
-              color: isPrimary ? Colors.white : AppColors.slate500,
-              fontWeight: FontWeight.bold,
+        TextField(
+          controller: widget.controller,
+          obscureText: isPassword ? obscureText : false,
+          style: const TextStyle(color: AppColors.gray400),
+          decoration: InputDecoration(
+            prefixIcon: Icon(widget.icon, color: AppColors.gray400),
+            hintText: widget.hintText,
+            hintStyle: const TextStyle(color: AppColors.gray400),
+            suffixIcon:
+                isPassword
+                    ? IconButton(
+                      icon: Icon(
+                        obscureText ? Icons.visibility_off : Icons.visibility,
+                        color: AppColors.gray400,
+                      ),
+                      onPressed:
+                          () => setState(() => obscureText = !obscureText),
+                    )
+                    : (widget.actionIcon != null
+                        ? IconButton(
+                          icon: Icon(
+                            widget.actionIcon,
+                            color: AppColors.gray400,
+                          ),
+                          onPressed: widget.onActionPressed,
+                        )
+                        : null),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
             ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide:
+                  isSearch
+                      ? BorderSide.none
+                      : const BorderSide(color: AppColors.gray200),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide:
+                  isSearch
+                      ? BorderSide.none
+                      : const BorderSide(color: AppColors.gray200),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide:
+                  isSearch
+                      ? BorderSide.none
+                      : const BorderSide(color: AppColors.gray200),
+            ),
+            filled: isSearch,
+            fillColor: isSearch ? AppColors.gray800 : null,
           ),
+        ),
       ],
-    );
-
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        elevation: WidgetStateProperty.all(0),
-        shadowColor: WidgetStateProperty.all(Colors.transparent),
-        backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-          if (isPrimary) return AppColors.slate500;
-          if (isGhost) return AppColors.slate500.withOpacity(0.05);
-          return Colors.transparent;
-        }),
-        overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
-          if (states.contains(WidgetState.hovered) ||
-              states.contains(WidgetState.pressed)) {
-            return AppColors.slate300.withOpacity(0.15);
-          }
-          return null;
-        }),
-        foregroundColor: WidgetStateProperty.all(AppColors.slate500),
-        side: WidgetStateProperty.all(
-          isOutline ? BorderSide(color: AppColors.slate500) : BorderSide.none,
-        ),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-        minimumSize: isGhost ? WidgetStateProperty.all(Size.zero) : null,
-        padding: WidgetStateProperty.all(
-          isGhost
-              ? const EdgeInsets.all(16)
-              : const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        ),
-        visualDensity: VisualDensity.standard,
-        alignment: Alignment.center,
-      ),
-      child: buttonChild,
     );
   }
 }

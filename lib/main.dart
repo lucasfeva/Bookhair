@@ -14,6 +14,7 @@ class BookHairApp extends StatelessWidget {
       title: 'BookHair',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),

@@ -1,7 +1,21 @@
 name: bookhair
-description: "A new Flutter project."
-publish_to: "none"
+description: "Aplicativo de agendamento de barbearias."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
 environment:
@@ -21,6 +35,26 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - lib/assets/fonts/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: lib/assets/fonts/Poppins-Thin.ttf
+          weight: 100
+        - asset: lib/assets/fonts/Poppins-Light.ttf
+          weight: 300
+        - asset: lib/assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: lib/assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Poppins-Italic.ttf
+          style: italic
   assets:
     - assets/icons/menu.png
     - assets/icons/hair.png
