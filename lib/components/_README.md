@@ -232,3 +232,69 @@ AppointmentCard(
 - A data e horário são exibidos no formato `22 Fev 2025 • 10:00`.
 - Quando a imagem falhar ao carregar, um ícone padrão é mostrado com fundo cinza.
 - Os botões de ação aparecem apenas se `showActions` for `true`.
+
+## BarberCard
+
+Componente para exibir barbeiros em duas variações:
+
+- **Showcase**: exibido com borda e função, sem ação de clique.
+- **Selectable**: exibido sem borda, com ação de clique, e inclui a opção "Qualquer funcionário".
+
+### Exemplo de uso (Showcase):
+
+```dart
+  BarberCarousel(
+    barbers: [
+      Barber(
+        name: 'Lucas',
+        role: 'Barbeiro',
+        imageUrl: 'https://link.com/lucas.jpg',
+        backgroundColor: Colors.pink.shade100,
+      ),
+      Barber(
+        name: 'Buzatto',
+        role: 'Barbeiro',
+        imageUrl: 'https://link.com/buzatto.jpg',
+        backgroundColor: Colors.teal.shade100,
+      ),
+      Barber(
+        name: 'Bruno',
+        role: 'Barbeiro',
+        imageUrl: 'https://link.com/bruno.jpg',
+        backgroundColor: Colors.lightBlue.shade100,
+      ),
+    ],
+    variant: BarberCardVariant.showcase,
+  )
+```
+
+### Exemplo de uso (Selectable):
+
+```dart
+  BarberCarousel(
+    barbers: [
+      Barber(
+        name: 'Lucas',
+        role: 'Barbeiro',
+        imageUrl: 'https://link.com/lucas.jpg',
+        backgroundColor: Colors.pink.shade100,
+      ),
+      Barber(
+        name: 'Buzatto',
+        role: 'Barbeiro',
+        imageUrl: 'https://link.com/buzatto.jpg',
+        backgroundColor: Colors.teal.shade100,
+      ),
+      Barber(
+        name: 'Bruno',
+        role: 'Barbeiro',
+        imageUrl: 'https://link.com/bruno.jpg',
+        backgroundColor: Colors.lightBlue.shade100,
+      ),
+    ],
+    variant: BarberCardVariant.selectable,
+    onSelect: (barber) {
+      print('Selecionado: ${barber.name}');
+    },
+  ),
+```

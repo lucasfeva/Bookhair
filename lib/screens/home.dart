@@ -4,6 +4,7 @@ import 'package:bookhair/components/button.dart';
 import 'package:bookhair/components/input.dart';
 import 'package:bookhair/components/service_item.dart';
 import 'package:bookhair/models/barbershop.dart';
+import 'package:bookhair/screens/barbershop.dart';
 import 'package:flutter/material.dart';
 import '../components/home_top_bar.dart';
 import '../components/service_categories.dart';
@@ -42,12 +43,7 @@ class HomeScreen extends StatelessWidget {
       ),
 
       body: SingleChildScrollView(
-        child: Column(
-          children: const [
-            HomeTopBar(),
-            _WhiteBody(),
-          ],
-        ),
+        child: Column(children: const [HomeTopBar(), _WhiteBody()]),
       ),
     );
   }
