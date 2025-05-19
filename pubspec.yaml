@@ -22,4 +22,10 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/icons/menu.png
+    - assets/icons/hair.png
+    - assets/icons/beard.png
+    - assets/icons/eyebrow.png
+    - assets/icons/chemistry.png
     - assets/icons/
+    - assets/icons/map.png

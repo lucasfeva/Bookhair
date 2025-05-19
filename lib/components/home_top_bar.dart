@@ -5,94 +5,107 @@ class HomeTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Saudação + Localização + Menu
+          // Saudação + menu
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Olá, Diogo Buzatto',
+                  Text(
+                    'Olá, Lucas Ferreira',
                     style: TextStyle(
-                      fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      fontSize: 18,
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Row(
-                    children: const [
-                      Icon(
-                        Icons.location_on,
-                        size: 16,
-                        color: Colors.blue,
-                      ),
+                    children: [
+                      Icon(Icons.location_on, size: 14, color: Colors.blueAccent),
                       SizedBox(width: 4),
                       Text(
                         'Rio Claro, SP',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white70,
-                        ),
+                        style: TextStyle(color: Colors.white70),
                       ),
                     ],
-                  ),
+                  )
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF1E1E1E),
-                  shape: BoxShape.circle,
-                ),
-                child: Image.asset(
-                  'assets/icons/menu.png',
-                  width: 24,
-                  height: 24,
+
+              // Botão do menu (com feedback de clique)
+              Builder(
+                builder: (context) => Material(
+                  color: Colors.transparent,
+                  shape: const CircleBorder(),
+                  child: InkWell(
+                    customBorder: const CircleBorder(),
+                    onTap: () => Scaffold.of(context).openEndDrawer(),
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF1E1E1E),
+                      ),
+                      child: Image.asset('assets/icons/menu.png', width: 24, height: 24),
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
-          // Campo de pesquisa
+
+          const SizedBox(height: 20),
+
+          // Barra de pesquisa
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
               color: const Color(0xFF1E1E1E),
               borderRadius: BorderRadius.circular(12),
             ),
-            height: 48,
             child: Row(
               children: [
-                Image.asset(
-                  'assets/icons/pesquisa.png',
-                  width: 20,
-                  height: 20,
-                  color: Colors.grey,
-                ),
-                const SizedBox(width: 8),
-                const Expanded(
+                const Icon(Icons.search, color: Colors.white30),
+                const SizedBox(width: 10),
+                Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.white54,
+                    decoration: const InputDecoration(
                       hintText: 'Pesquisar',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: TextStyle(color: Colors.white38),
                       border: InputBorder.none,
                     ),
-                    style: TextStyle(color: Colors.white),
+                    onChanged: (value) {},
                   ),
                 ),
-                Image.asset(
-                  'assets/icons/map.png',
-                  width: 24,
-                  height: 24,
-                  color: Colors.grey,
+
+                // Ícone de mapa com clique
+                Material(
+                  color: Colors.transparent,
+                  shape: const CircleBorder(),
+                  child: InkWell(
+                    customBorder: const CircleBorder(),
+                    onTap: () {
+                      // ação futura
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/icons/map.png',
+                        width: 20,
+                        height: 20,
+                        color: Colors.white54,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
