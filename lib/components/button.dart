@@ -32,7 +32,7 @@ class Button extends StatelessWidget {
         if (icon != null)
           Icon(
             icon,
-            size: iconSize ?? 18, // <-- tamanho customizável
+            size: iconSize ?? 18, 
             color: isPrimary ? Colors.white : AppColors.slate500,
           ),
         if (icon != null && text.isNotEmpty) const SizedBox(width: 8),
