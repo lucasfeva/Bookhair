@@ -25,14 +25,14 @@ class ServiceCategories extends StatelessWidget {
                 child: InkWell(
                   customBorder: const CircleBorder(),
                   onTap: () {
-                    // ação futura
+                    
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: const BoxDecoration(
-                      color: Color(0xFFEEF3F8), // ✅ Cor do fundo
+                      color: Color(0xFFEEF3F8), 
                       shape: BoxShape.circle,
-                      // border removido
+                      
                     ),
                     child: Image.asset(
                       service['icon']!,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'barbershop_card.dart';
 import '../models/barbershop.dart';
+import 'barbershop_card.dart';
 
 class BarbershopCarousel extends StatelessWidget {
   final List<Barbershop> barbershops;
@@ -15,7 +15,7 @@ class BarbershopCarousel extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: barbershops.length,
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemBuilder: (context, index) {
           final b = barbershops[index];
           return BarbershopCard(
