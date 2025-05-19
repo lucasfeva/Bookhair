@@ -37,6 +37,13 @@ flutter:
 
   assets:
     - lib/assets/fonts/
+    - assets/icons/menu.png
+    - assets/icons/hair.png
+    - assets/icons/beard.png
+    - assets/icons/eyebrow.png
+    - assets/icons/chemistry.png
+    - assets/icons/
+    - assets/icons/map.png
 
   fonts:
     - family: Poppins
@@ -55,11 +62,4 @@ flutter:
           weight: 700
         - asset: lib/assets/fonts/Poppins-Italic.ttf
           style: italic
-  assets:
-    - assets/icons/menu.png
-    - assets/icons/hair.png
-    - assets/icons/beard.png
-    - assets/icons/eyebrow.png
-    - assets/icons/chemistry.png
-    - assets/icons/
-    - assets/icons/map.png
+    
