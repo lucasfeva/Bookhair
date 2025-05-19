@@ -1,4 +1,7 @@
+import 'package:bookhair/components/barber_card.dart';
+import 'package:bookhair/components/barber_carousel.dart';
 import 'package:bookhair/data/constants/colors.dart';
+import 'package:bookhair/models/barber.dart';
 import 'package:flutter/material.dart';
 import '../components/button.dart';
 import '../components/service_item.dart';
@@ -147,7 +150,7 @@ class BarbershopScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 24),
 
                       // Ações
                       Row(
@@ -179,16 +182,16 @@ class BarbershopScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 24),
                       const Divider(),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 24),
 
                       // Título serviços
                       const Text(
                         'Serviços',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 18,
                           color: AppColors.gray900,
                         ),
                       ),
@@ -205,6 +208,46 @@ class BarbershopScreen extends StatelessWidget {
                       const ServiceItem(
                         name: 'Alisamento masculino',
                         price: 'R\$ 60,00',
+                      ),
+
+                      const SizedBox(height: 24),
+                      const Text(
+                        'Equipe',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: AppColors.gray900,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      BarberCarousel(
+                        barbers: [
+                          Barber(
+                            name: 'Lucas',
+                            role: 'Barbeiro',
+                            imageUrl: 'https://link.com/lucas.jpg',
+                            backgroundColor: Colors.pink.shade100,
+                          ),
+                          Barber(
+                            name: 'Buzatto',
+                            role: 'Barbeiro',
+                            imageUrl: 'https://link.com/buzatto.jpg',
+                            backgroundColor: Colors.teal.shade100,
+                          ),
+                          Barber(
+                            name: 'Bruno',
+                            role: 'Barbeiro',
+                            imageUrl: 'https://link.com/bruno.jpg',
+                            backgroundColor: Colors.lightBlue.shade100,
+                          ),
+                          Barber(
+                            name: 'Lucas',
+                            role: 'Barbeiro',
+                            imageUrl: 'https://link.com/lucas.jpg',
+                            backgroundColor: Colors.pink.shade100,
+                          ),
+                        ],
+                        variant: BarberCardVariant.showcase,
                       ),
                     ],
                   ),
