@@ -26,6 +26,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   getwidget: ^4.0.0
+  http: ^1.4.0
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

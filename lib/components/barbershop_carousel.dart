@@ -4,8 +4,9 @@ import 'barbershop_card.dart';
 
 class BarbershopCarousel extends StatelessWidget {
   final List<Barbershop> barbershops;
+  final void Function(Barbershop)? onTap;
 
-  const BarbershopCarousel({super.key, required this.barbershops});
+  const BarbershopCarousel({super.key, required this.barbershops, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,7 @@ class BarbershopCarousel extends StatelessWidget {
             address: b.address,
             imageUrl: b.imageUrl,
             rating: b.rating,
-            onReserve: () {
-              
-            },
+            onReserve: () => onTap?.call(b),
           );
         },
       ),
