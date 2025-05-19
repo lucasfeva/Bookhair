@@ -57,7 +57,6 @@ class BarbershopScreen extends StatelessWidget {
             ],
           ),
 
-          // Conteúdo da barbearia com borda arredondada e translate
           Expanded(
             child: Transform.translate(
               offset: const Offset(0, -24),
@@ -110,7 +109,6 @@ class BarbershopScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
 
-                      // Endereço
                       Row(
                         children: [
                           const Icon(
@@ -132,7 +130,6 @@ class BarbershopScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
 
-                      // Avaliação
                       Row(
                         children: [
                           const Icon(
@@ -152,7 +149,6 @@ class BarbershopScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
 
-                      // Ações
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
@@ -186,7 +182,6 @@ class BarbershopScreen extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 24),
 
-                      // Título serviços
                       const Text(
                         'Serviços',
                         style: TextStyle(
