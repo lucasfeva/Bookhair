@@ -8,6 +8,7 @@ class Button extends StatelessWidget {
   final ButtonVariant variant;
   final VoidCallback? onPressed;
   final IconData? icon;
+  final double? iconSize;
 
   const Button({
     super.key,
@@ -15,6 +16,7 @@ class Button extends StatelessWidget {
     this.variant = ButtonVariant.primary,
     this.onPressed,
     this.icon,
+    this.iconSize,
   });
 
   @override
@@ -30,7 +32,7 @@ class Button extends StatelessWidget {
         if (icon != null)
           Icon(
             icon,
-            size: 18,
+            size: iconSize ?? 18, // <-- tamanho customizável
             color: isPrimary ? Colors.white : AppColors.slate500,
           ),
         if (icon != null && text.isNotEmpty) const SizedBox(width: 8),
@@ -72,7 +74,7 @@ class Button extends StatelessWidget {
         minimumSize: isGhost ? WidgetStateProperty.all(Size.zero) : null,
         padding: WidgetStateProperty.all(
           isGhost
-              ? const EdgeInsets.all(16)
+              ? const EdgeInsets.all(22)
               : const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
         visualDensity: VisualDensity.standard,
