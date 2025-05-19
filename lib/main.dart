@@ -25,6 +25,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'BookHair',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
+      ),
       initialRoute: '/',
       routes: {
         '/': (_) => const SignInScreen(),
