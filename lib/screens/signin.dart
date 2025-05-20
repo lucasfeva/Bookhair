@@ -1,8 +1,9 @@
-import 'package:bookhair/components/input.dart';
+import 'package:bookhair/components/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
 import 'package:bookhair/data/constants/colors.dart';
+import '../components/input.dart';
 import '../components/button.dart';
 import '../core/api_client.dart';
 import '../services/auth_service.dart';
@@ -36,6 +37,28 @@ class _SignInScreenState extends State<SignInScreen> {
   Future<void> _onSignIn() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
+
+    // Mock admin login (temporario)
+    if (email == 'admin@email.com' && password == 'password') {
+      final mockUser = {
+        'id': 1,
+        'nome': 'Admin Mock',
+        'email': email,
+        'email_verified_at': null,
+        'telefone': '+55 11 99999-0000',
+        'endereco': 'Rua Exemplo, 123',
+        'created_at': '2025-05-19T02:02:34.000000Z',
+        'updated_at': '2025-05-19T02:02:34.000000Z',
+      };
+      final mockToken = 'mocked_admin_token_123';
+
+      print('Mock login realizado:');
+      print(mockUser);
+
+      Navigator.pushReplacementNamed(context, '/home');
+      return;
+    }
+
     if (email.isEmpty || password.isEmpty) {
       _showError('Preencha email e senha.');
       return;
@@ -80,7 +103,6 @@ class _SignInScreenState extends State<SignInScreen> {
       backgroundColor: Colors.transparent,
       body: Column(
         children: [
-          // Gradiente no topo com o título
           Container(
             width: double.infinity,
             height: headerHeight,
@@ -93,23 +115,29 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
             alignment: Alignment.center,
-            child: const Text(
-              'BookHair',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Logo(width: 40, height: 40),
+                SizedBox(width: 8),
+                Text(
+                  'BookHair',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
 
-          // Cartão branco sobreposto
           Expanded(
             child: Transform.translate(
               offset: const Offset(0, -24),
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -153,13 +181,19 @@ class _SignInScreenState extends State<SignInScreen> {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {},
-                          child: const Text('Esqueceu a senha?'),
+                          child: const Text(
+                            'Esqueceu a senha?',
+                            style: TextStyle(color: AppColors.slate500),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 24),
-                      Button(
-                        text: _isLoading ? 'Entrando...' : 'Login',
-                        onPressed: _isLoading ? null : _onSignIn,
+                      SizedBox(
+                        width: double.infinity,
+                        child: Button(
+                          text: _isLoading ? 'Entrando...' : 'Login',
+                          onPressed: _isLoading ? null : _onSignIn,
+                        ),
                       ),
                       const SizedBox(height: 16),
                       const Divider(),
