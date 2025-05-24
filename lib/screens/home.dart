@@ -1,25 +1,30 @@
+import 'package:bookhair/data/constants/colors.dart';
+import 'package:bookhair/screens/barbershop.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../components/home_top_bar.dart';
 import '../components/service_categories.dart';
 import '../components/appointment_card.dart';
 import '../components/barbershop_carousel.dart';
-import '../models/barbershop.dart';
+import '../providers/barbershop_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF141416),
+    final barbershopProv = context.watch<BarbershopProvider>();
 
+    return Scaffold(
+      backgroundColor: AppColors.gray900,
       endDrawer: Drawer(
-        backgroundColor: const Color(0xFF141416),
+        backgroundColor: AppColors.gray900,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(color: Color(0xFF141416)),
+              decoration: BoxDecoration(color: AppColors.gray900),
               child: Text(
                 'Menu',
                 style: TextStyle(color: Colors.white, fontSize: 24),
@@ -27,21 +32,33 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.home, color: Colors.white),
-              title: const Text('Início', style: TextStyle(color: Colors.white)),
+              title: const Text(
+                'Início',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () => Navigator.pushNamed(context, '/home'),
             ),
             ListTile(
               leading: const Icon(Icons.person, color: Colors.white),
-              title: const Text('Perfil', style: TextStyle(color: Colors.white)),
+              title: const Text(
+                'Perfil',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () => Navigator.pushNamed(context, '/perfil'),
             ),
           ],
         ),
       ),
-
-      body: SingleChildScrollView(
-        child: Column(children: const [HomeTopBar(), _WhiteBody()]),
-      ),
+      body:
+          barbershopProv.loading
+              ? const Center(child: CircularProgressIndicator())
+              : barbershopProv.error != null
+              ? Center(child: Text(barbershopProv.error!))
+              : SingleChildScrollView(
+                child: Column(
+                  children: [const HomeTopBar(), const _WhiteBody()],
+                ),
+              ),
     );
   }
 }
@@ -51,14 +68,8 @@ class _WhiteBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final barbershopList = List.generate(10, (index) {
-      return Barbershop(
-        name: 'Vintage Barber',
-        address: 'Avenida São Sebastião, 357...',
-        imageUrl: 'assets/images/barbershop_2.png',
-        rating: 4.7,
-      );
-    });
+    final barbershopProv = context.read<BarbershopProvider>();
+    final barbershopList = barbershopProv.barbershops;
 
     return Container(
       width: double.infinity,
@@ -67,13 +78,13 @@ class _WhiteBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           const ServiceCategories(),
-          const SizedBox(height: 30),
+          const SizedBox(height: 32),
 
-          
+          // Meus agendamentos
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -83,9 +94,9 @@ class _WhiteBody extends StatelessWidget {
                     const Text(
                       'Meus agendamentos',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: AppColors.gray950,
                       ),
                     ),
                     TextButton(
@@ -100,7 +111,7 @@ class _WhiteBody extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Colors.blueAccent,
+                          color: AppColors.slate500,
                         ),
                       ),
                     ),
@@ -122,34 +133,44 @@ class _WhiteBody extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
 
-          
+          // Próximos
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: const Text(
               'Próximos',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppColors.gray950,
               ),
             ),
           ),
           const SizedBox(height: 16),
-          BarbershopCarousel(barbershops: barbershopList),
+          BarbershopCarousel(
+            barbershops: barbershopList,
+            onTap: (barbershop) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => BarbershopScreen(barbershop: barbershop),
+                ),
+              );
+            },
+          ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
 
-          
+          // Populares
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: const Text(
               'Populares',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppColors.gray950,
               ),
             ),
           ),

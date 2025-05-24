@@ -1,3 +1,5 @@
+import 'package:bookhair/components/input.dart';
+import 'package:bookhair/data/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeTopBar extends StatelessWidget {
@@ -9,12 +11,11 @@ class HomeTopBar extends StatelessWidget {
       top: true,
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 28, 16, 20), 
+        padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -32,87 +33,57 @@ class HomeTopBar extends StatelessWidget {
                     SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Icons.location_on, size: 14, color: Colors.blueAccent),
+                        Icon(
+                          Icons.location_on,
+                          size: 14,
+                          color: AppColors.slate500,
+                        ),
                         SizedBox(width: 4),
                         Text(
                           'Rio Claro, SP',
-                          style: TextStyle(color: Colors.white70),
+                          style: TextStyle(color: AppColors.gray50),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
 
-                
                 Builder(
-                  builder: (context) => Material(
-                    color: Colors.transparent,
-                    shape: const CircleBorder(),
-                    child: InkWell(
-                      customBorder: const CircleBorder(),
-                      onTap: () => Scaffold.of(context).openEndDrawer(),
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFF1E1E1E),
+                  builder:
+                      (context) => Material(
+                        color: Colors.transparent,
+                        shape: const CircleBorder(),
+                        child: InkWell(
+                          customBorder: const CircleBorder(),
+                          onTap: () => Scaffold.of(context).openEndDrawer(),
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.gray800,
+                            ),
+                            child: Image.asset(
+                              'assets/icons/menu.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                          ),
                         ),
-                        child: Image.asset('assets/icons/menu.png', width: 24, height: 24),
                       ),
-                    ),
-                  ),
                 ),
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 22),
 
-            
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1E1E1E),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.search, color: Colors.white30),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      style: const TextStyle(color: Colors.white),
-                      cursorColor: Colors.white54,
-                      decoration: const InputDecoration(
-                        hintText: 'Pesquisar',
-                        hintStyle: TextStyle(color: Colors.white38),
-                        border: InputBorder.none,
-                      ),
-                      onChanged: (value) {},
-                    ),
-                  ),
-
-                  
-                  Material(
-                    color: Colors.transparent,
-                    shape: const CircleBorder(),
-                    child: InkWell(
-                      customBorder: const CircleBorder(),
-                      onTap: () {
-                        
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          'assets/icons/map.png',
-                          width: 20,
-                          height: 20,
-                          color: Colors.white54,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            CustomInput(
+              hintText: 'Pesquisar',
+              icon: Icons.search,
+              actionIcon: Icons.map,
+              type: InputType.search,
+              onActionPressed: () {
+                print('Mapa');
+              },
             ),
           ],
         ),

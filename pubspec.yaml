@@ -33,12 +33,21 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.10.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/assets/img/logo-dark.png"
+  android_adaptive_icon_foreground: "lib/assets/img/logo-dark.png"
 
 flutter:
   uses-material-design: true
 
   assets:
     - lib/assets/fonts/
+    - lib/assets/img/logo.png
+    - lib/assets/img/logo-dark.png
     - assets/icons/menu.png
     - assets/icons/hair.png
     - assets/icons/beard.png
@@ -66,4 +75,3 @@ flutter:
           weight: 700
         - asset: lib/assets/fonts/Poppins-Italic.ttf
           style: italic
-    
