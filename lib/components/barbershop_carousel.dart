@@ -15,7 +15,7 @@ class BarbershopCarousel extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: barbershops.length,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         itemBuilder: (context, index) {
           final b = barbershops[index];
           return BarbershopCard(

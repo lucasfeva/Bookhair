@@ -1,3 +1,5 @@
+import 'package:bookhair/data/constants/colors.dart';
+import 'package:bookhair/screens/barbershop.dart';
 import 'package:flutter/material.dart';
 import '../components/home_top_bar.dart';
 import '../components/service_categories.dart';
@@ -11,15 +13,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF141416),
+      backgroundColor: AppColors.gray900,
 
       endDrawer: Drawer(
-        backgroundColor: const Color(0xFF141416),
+        backgroundColor: AppColors.gray900,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(color: Color(0xFF141416)),
+              decoration: BoxDecoration(color: AppColors.gray900),
               child: Text(
                 'Menu',
                 style: TextStyle(color: Colors.white, fontSize: 24),
@@ -27,12 +29,18 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.home, color: Colors.white),
-              title: const Text('Início', style: TextStyle(color: Colors.white)),
+              title: const Text(
+                'Início',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () => Navigator.pushNamed(context, '/home'),
             ),
             ListTile(
               leading: const Icon(Icons.person, color: Colors.white),
-              title: const Text('Perfil', style: TextStyle(color: Colors.white)),
+              title: const Text(
+                'Perfil',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () => Navigator.pushNamed(context, '/perfil'),
             ),
           ],
@@ -67,13 +75,12 @@ class _WhiteBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           const ServiceCategories(),
-          const SizedBox(height: 30),
+          const SizedBox(height: 32),
 
-          
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -83,9 +90,9 @@ class _WhiteBody extends StatelessWidget {
                     const Text(
                       'Meus agendamentos',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: AppColors.gray950,
                       ),
                     ),
                     TextButton(
@@ -100,7 +107,7 @@ class _WhiteBody extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Colors.blueAccent,
+                          color: AppColors.slate500,
                         ),
                       ),
                     ),
@@ -122,34 +129,42 @@ class _WhiteBody extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
 
-          
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
               'Próximos',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppColors.gray950,
               ),
             ),
           ),
           const SizedBox(height: 16),
-          BarbershopCarousel(barbershops: barbershopList),
+          BarbershopCarousel(
+            barbershops: barbershopList,
+            onTap: (barbershop) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => BarbershopScreen(barbershop: barbershop),
+                ),
+              );
+            },
+          ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
 
-          
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
               'Populares',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppColors.gray950,
               ),
             ),
           ),

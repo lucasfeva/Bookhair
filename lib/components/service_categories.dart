@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bookhair/components/button.dart';
 
 class ServiceCategories extends StatelessWidget {
   const ServiceCategories({super.key});
@@ -13,44 +14,21 @@ class ServiceCategories extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: services.map((service) {
-          return Column(
-            children: [
-              Material(
-                color: Colors.transparent,
-                shape: const CircleBorder(),
-                child: InkWell(
-                  customBorder: const CircleBorder(),
-                  onTap: () {
-                    
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFEEF3F8), 
-                      shape: BoxShape.circle,
-                      
-                    ),
-                    child: Image.asset(
-                      service['icon']!,
-                      width: 24,
-                      height: 24,
-                      color: Colors.blueAccent,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                service['label']!,
-                style: const TextStyle(color: Colors.black87, fontSize: 12),
-              ),
-            ],
-          );
-        }).toList(),
+        children:
+            services.map((service) {
+              return Button(
+                variant: ButtonVariant.ghost,
+                onPressed: () {
+                  // TODO: filtrar pelo serviço
+                },
+                assetIcon: service['icon'] as String,
+                text: '',
+                iconSize: 32,
+              );
+            }).toList(),
       ),
     );
   }

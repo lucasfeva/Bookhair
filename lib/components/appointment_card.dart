@@ -85,7 +85,7 @@ class AppointmentCard extends StatelessWidget {
                       text: formattedTime,
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: AppColors.gray400, 
+                        color: AppColors.gray400,
                       ),
                     ),
                   ],

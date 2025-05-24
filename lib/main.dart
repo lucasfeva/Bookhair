@@ -1,3 +1,4 @@
+import 'package:bookhair/data/constants/colors.dart';
 import 'package:bookhair/screens/home.dart';
 import 'package:bookhair/screens/signin.dart';
 import 'package:bookhair/screens/signup.dart';
@@ -5,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/api_client.dart';
-import 'services/auth_service.dart';
 import 'providers/auth_provider.dart';
+import 'services/auth_service.dart';
 
 void main() {
   final apiClient = ApiClient(baseUrl: 'http://10.0.2.2:8000');
@@ -29,8 +30,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Poppins',
-        primarySwatch: Colors.blue,
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.slate500),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(backgroundColor: AppColors.slate500),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(foregroundColor: AppColors.slate500),
+        ),
+        dialogTheme: DialogTheme(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
       ),
       initialRoute: '/',
       routes: {
