@@ -6,16 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/api_client.dart';
+
 import 'providers/auth_provider.dart';
 import 'services/auth_service.dart';
+
+import 'services/barbershop_service.dart';
+import 'providers/barbershop_provider.dart';
 
 void main() {
   final apiClient = ApiClient(baseUrl: 'http://10.0.2.2:8000');
   final authService = AuthService(apiClient);
+  final barbershopService = BarbershopService(apiClient);
 
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => AuthProvider(authService),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider(authService)),
+        ChangeNotifierProvider(
+          create: (_) => BarbershopProvider(barbershopService)..load(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
@@ -23,6 +33,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

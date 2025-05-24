@@ -1,20 +1,23 @@
 import 'package:bookhair/data/constants/colors.dart';
 import 'package:bookhair/screens/barbershop.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../components/home_top_bar.dart';
 import '../components/service_categories.dart';
 import '../components/appointment_card.dart';
 import '../components/barbershop_carousel.dart';
-import '../models/barbershop.dart';
+import '../providers/barbershop_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final barbershopProv = context.watch<BarbershopProvider>();
+
     return Scaffold(
       backgroundColor: AppColors.gray900,
-
       endDrawer: Drawer(
         backgroundColor: AppColors.gray900,
         child: ListView(
@@ -46,10 +49,16 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-
-      body: SingleChildScrollView(
-        child: Column(children: const [HomeTopBar(), _WhiteBody()]),
-      ),
+      body:
+          barbershopProv.loading
+              ? const Center(child: CircularProgressIndicator())
+              : barbershopProv.error != null
+              ? Center(child: Text(barbershopProv.error!))
+              : SingleChildScrollView(
+                child: Column(
+                  children: [const HomeTopBar(), const _WhiteBody()],
+                ),
+              ),
     );
   }
 }
@@ -59,14 +68,8 @@ class _WhiteBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final barbershopList = List.generate(10, (index) {
-      return Barbershop(
-        name: 'Vintage Barber',
-        address: 'Avenida São Sebastião, 357...',
-        imageUrl: 'assets/images/barbershop_2.png',
-        rating: 4.7,
-      );
-    });
+    final barbershopProv = context.read<BarbershopProvider>();
+    final barbershopList = barbershopProv.barbershops;
 
     return Container(
       width: double.infinity,
@@ -79,6 +82,7 @@ class _WhiteBody extends StatelessWidget {
           const ServiceCategories(),
           const SizedBox(height: 32),
 
+          // Meus agendamentos
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
@@ -131,9 +135,10 @@ class _WhiteBody extends StatelessWidget {
 
           const SizedBox(height: 24),
 
+          // Próximos
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text(
+            child: const Text(
               'Próximos',
               style: TextStyle(
                 fontSize: 18,
@@ -157,9 +162,10 @@ class _WhiteBody extends StatelessWidget {
 
           const SizedBox(height: 24),
 
+          // Populares
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text(
+            child: const Text(
               'Populares',
               style: TextStyle(
                 fontSize: 18,

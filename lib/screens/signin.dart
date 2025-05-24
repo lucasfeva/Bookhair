@@ -1,31 +1,23 @@
-import 'package:bookhair/components/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:provider/provider.dart';
 
 import 'package:bookhair/data/constants/colors.dart';
 import '../components/input.dart';
 import '../components/button.dart';
-import '../core/api_client.dart';
-import '../services/auth_service.dart';
+import '../providers/auth_provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  late final AuthService _authService;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _authService = AuthService(ApiClient(baseUrl: 'http://10.0.2.2:8000'));
-  }
 
   @override
   void dispose() {
@@ -37,51 +29,30 @@ class _SignInScreenState extends State<SignInScreen> {
   Future<void> _onSignIn() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
-
-    // Mock admin login (temporario)
-    if (email == 'admin@email.com' && password == 'password') {
-      final mockUser = {
-        'id': 1,
-        'nome': 'Admin Mock',
-        'email': email,
-        'email_verified_at': null,
-        'telefone': '+55 11 99999-0000',
-        'endereco': 'Rua Exemplo, 123',
-        'created_at': '2025-05-19T02:02:34.000000Z',
-        'updated_at': '2025-05-19T02:02:34.000000Z',
-      };
-      final mockToken = 'mocked_admin_token_123';
-
-      print('Mock login realizado:');
-      print(mockUser);
-
-      Navigator.pushReplacementNamed(context, '/home');
-      return;
-    }
-
     if (email.isEmpty || password.isEmpty) {
       _showError('Preencha email e senha.');
       return;
     }
 
+    final authProv = context.read<AuthProvider>();
     setState(() => _isLoading = true);
-    try {
-      await _authService.login(email: email, password: password);
+    await authProv.signIn(email, password);
+    setState(() => _isLoading = false);
+
+    if (authProv.error != null) {
+      _showError(authProv.error!);
+    } else {
       Navigator.pushReplacementNamed(context, '/home');
-    } catch (e) {
-      _showError('Falha ao autenticar: ${e.toString()}');
-    } finally {
-      setState(() => _isLoading = false);
     }
   }
 
-  void _showError(String message) {
+  void _showError(String msg) {
     showDialog(
       context: context,
       builder:
           (_) => AlertDialog(
             title: const Text('Erro'),
-            content: Text(message),
+            content: Text(msg),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -96,16 +67,16 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final statusBar = MediaQuery.of(context).padding.top;
-    final headerHeight = size.height * 0.35 + statusBar;
+    final headerH = size.height * 0.35 + statusBar;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.transparent,
       body: Column(
         children: [
+          // Cabeçalho gradiente...
           Container(
             width: double.infinity,
-            height: headerHeight,
+            height: headerH,
             padding: EdgeInsets.only(top: statusBar),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -115,23 +86,17 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
             alignment: Alignment.center,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Logo(width: 40, height: 40),
-                SizedBox(width: 8),
-                Text(
-                  'BookHair',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            child: const Text(
+              'BookHair',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
 
+          // Card branco
           Expanded(
             child: Transform.translate(
               offset: const Offset(0, -24),
@@ -181,10 +146,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {},
-                          child: const Text(
-                            'Esqueceu a senha?',
-                            style: TextStyle(color: AppColors.slate500),
-                          ),
+                          child: const Text('Esqueceu a senha?'),
                         ),
                       ),
                       const SizedBox(height: 16),
