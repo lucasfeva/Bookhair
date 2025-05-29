@@ -66,29 +66,29 @@ class Button extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        elevation: MaterialStateProperty.all(0),
-        shadowColor: MaterialStateProperty.all(Colors.transparent),
-        backgroundColor: MaterialStateProperty.resolveWith<Color?>((states) {
+        elevation: WidgetStateProperty.all(0),
+        shadowColor: WidgetStateProperty.all(Colors.transparent),
+        backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
           if (isPrimary) return AppColors.slate500;
           if (isGhost) return AppColors.slate500.withOpacity(0.05);
           return Colors.transparent;
         }),
-        overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-          if (states.contains(MaterialState.hovered) ||
-              states.contains(MaterialState.pressed)) {
+        overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+          if (states.contains(WidgetState.hovered) ||
+              states.contains(WidgetState.pressed)) {
             return AppColors.slate300.withOpacity(0.15);
           }
           return null;
         }),
-        foregroundColor: MaterialStateProperty.all(AppColors.slate500),
-        side: MaterialStateProperty.all(
+        foregroundColor: WidgetStateProperty.all(AppColors.slate500),
+        side: WidgetStateProperty.all(
           isOutline ? BorderSide(color: AppColors.slate500) : BorderSide.none,
         ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
-        minimumSize: isGhost ? MaterialStateProperty.all(Size.zero) : null,
-        padding: MaterialStateProperty.all(
+        minimumSize: isGhost ? WidgetStateProperty.all(Size.zero) : null,
+        padding: WidgetStateProperty.all(
           isGhost
               ? const EdgeInsets.all(22)
               : const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
