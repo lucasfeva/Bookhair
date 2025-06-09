@@ -1,19 +1,63 @@
 import 'package:bookhair/components/barber_card.dart';
-import 'package:bookhair/components/barber_carousel.dart';
-import 'package:bookhair/data/constants/colors.dart';
-import 'package:bookhair/models/barber.dart';
 import 'package:flutter/material.dart';
-import '../components/button.dart';
-import '../components/service_item.dart';
-import '../models/barbershop.dart';
+import 'package:provider/provider.dart';
 
+import '../core/api_client.dart';
+import '../services/service_service.dart';
+import '../providers/service_provider.dart';
+import '../services/professional_service.dart';
+import '../providers/professional_provider.dart';
+
+import '../components/service_item.dart';
+import '../components/button.dart';
+import '../components/barber_carousel.dart';
+import '../data/constants/colors.dart';
+import '../models/barbershop.dart';
+import '../models/barber.dart';
+
+/// Tela de detalhes de uma barbearia, com serviços e profissionais carregados dinamicamente
 class BarbershopScreen extends StatelessWidget {
   final Barbershop barbershop;
 
-  const BarbershopScreen({super.key, required this.barbershop});
+  const BarbershopScreen({Key? key, required this.barbershop})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final client = Provider.of<ApiClient>(context, listen: false);
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ServiceProvider>(
+          create: (_) {
+            final prov = ServiceProvider(ServiceService(client));
+            prov.load(barbershop.id);
+            return prov;
+          },
+        ),
+        ChangeNotifierProvider<ProfessionalProvider>(
+          create: (_) {
+            final prov = ProfessionalProvider(ProfessionalService(client));
+            prov.load(barbershop.id);
+            return prov;
+          },
+        ),
+      ],
+      child: _BarbershopView(barbershop: barbershop),
+    );
+  }
+}
+
+class _BarbershopView extends StatelessWidget {
+  final Barbershop barbershop;
+
+  const _BarbershopView({Key? key, required this.barbershop}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final svcProv = context.watch<ServiceProvider>();
+    final profProv = context.watch<ProfessionalProvider>();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Column(
@@ -21,27 +65,22 @@ class BarbershopScreen extends StatelessWidget {
           // Imagem de capa + botão de voltar
           Stack(
             children: [
-              ClipRRect(
-                child: Image.network(
-                  barbershop.imageUrl,
-                  width: double.infinity,
-                  height: 300,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
+              Image.network(
+                barbershop.imageUrl ?? '',
+                width: double.infinity,
+                height: 300,
+                fit: BoxFit.cover,
+                errorBuilder:
+                    (_, __, ___) => Container(
                       width: double.infinity,
                       height: 300,
                       color: AppColors.gray200,
-                      child: const Center(
-                        child: Icon(
-                          Icons.image_not_supported,
-                          size: 60,
-                          color: AppColors.gray500,
-                        ),
+                      child: const Icon(
+                        Icons.image_not_supported,
+                        size: 60,
+                        color: AppColors.gray500,
                       ),
-                    );
-                  },
-                ),
+                    ),
               ),
               Positioned(
                 top: MediaQuery.of(context).padding.top + 12,
@@ -57,10 +96,12 @@ class BarbershopScreen extends StatelessWidget {
             ],
           ),
 
+          // Conteúdo branco com borda arredondada
           Expanded(
             child: Transform.translate(
               offset: const Offset(0, -24),
               child: Container(
+                width: double.infinity,
                 padding: const EdgeInsets.fromLTRB(20, 36, 20, 20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -71,7 +112,7 @@ class BarbershopScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Nome e status
+                      // Nome + status
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -86,7 +127,6 @@ class BarbershopScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          // refazer
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 10,
@@ -109,6 +149,7 @@ class BarbershopScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
 
+                      // Endereço
                       Row(
                         children: [
                           const Icon(
@@ -130,6 +171,7 @@ class BarbershopScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
 
+                      // Avaliação
                       Row(
                         children: [
                           const Icon(
@@ -139,7 +181,8 @@ class BarbershopScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '${barbershop.rating} (3.279 Avaliações)',
+                            '${barbershop.rating.toStringAsFixed(1)} '
+                            '(${barbershop.totalReviews} avaliações)',
                             style: const TextStyle(
                               fontSize: 14,
                               color: AppColors.gray400,
@@ -149,6 +192,7 @@ class BarbershopScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
 
+                      // Ações
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
@@ -182,6 +226,7 @@ class BarbershopScreen extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 24),
 
+                      // Serviços
                       const Text(
                         'Serviços',
                         style: TextStyle(
@@ -191,59 +236,49 @@ class BarbershopScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
-
-                      // Lista de serviços
-                      const ServiceItem(name: 'Cabelo', price: 'R\$ 30,00'),
-                      const ServiceItem(
-                        name: 'Cabelo + Barba',
-                        price: 'R\$ 45,00',
-                      ),
-                      const ServiceItem(name: 'Barba', price: 'R\$ 15,00'),
-                      const ServiceItem(name: 'Raspado', price: 'R\$ 15,00'),
-                      const ServiceItem(
-                        name: 'Alisamento masculino',
-                        price: 'R\$ 60,00',
-                      ),
+                      if (svcProv.loading)
+                        const Center(child: CircularProgressIndicator())
+                      else if (svcProv.error != null)
+                        Center(child: Text(svcProv.error!))
+                      else
+                        ...svcProv.items.map(
+                          (s) => ServiceItem(
+                            name: s.name,
+                            price: s.formattedPrice,
+                          ),
+                        ),
 
                       const SizedBox(height: 24),
+
+                      // Profissionais
                       const Text(
-                        'Equipe',
+                        'Profissionais',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 18,
                           color: AppColors.gray900,
                         ),
                       ),
                       const SizedBox(height: 12),
-                      BarberCarousel(
-                        barbers: [
-                          Barber(
-                            name: 'Lucas',
-                            role: 'Barbeiro',
-                            imageUrl: 'https://link.com/lucas.jpg',
-                            backgroundColor: Colors.pink.shade100,
-                          ),
-                          Barber(
-                            name: 'Buzatto',
-                            role: 'Barbeiro',
-                            imageUrl: 'https://link.com/buzatto.jpg',
-                            backgroundColor: Colors.teal.shade100,
-                          ),
-                          Barber(
-                            name: 'Bruno',
-                            role: 'Barbeiro',
-                            imageUrl: 'https://link.com/bruno.jpg',
-                            backgroundColor: Colors.lightBlue.shade100,
-                          ),
-                          Barber(
-                            name: 'Lucas',
-                            role: 'Barbeiro',
-                            imageUrl: 'https://link.com/lucas.jpg',
-                            backgroundColor: Colors.pink.shade100,
-                          ),
-                        ],
-                        variant: BarberCardVariant.showcase,
-                      ),
+                      if (profProv.loading)
+                        const Center(child: CircularProgressIndicator())
+                      else if (profProv.error != null)
+                        Center(child: Text(profProv.error!))
+                      else
+                        BarberCarousel(
+                          barbers:
+                              profProv.professionals
+                                  .map(
+                                    (p) => Barber(
+                                      name: p.nome,
+                                      role: null,
+                                      imageUrl: null,
+                                      backgroundColor: AppColors.gray200,
+                                    ),
+                                  )
+                                  .toList(),
+                          variant: BarberCardVariant.showcase,
+                        ),
                     ],
                   ),
                 ),

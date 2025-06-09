@@ -1,27 +1,28 @@
-import 'package:bookhair/data/constants/colors.dart';
-import 'package:bookhair/screens/home.dart';
-import 'package:bookhair/screens/signin.dart';
-import 'package:bookhair/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'data/constants/colors.dart';
 import 'core/api_client.dart';
-
 import 'providers/auth_provider.dart';
 import 'services/auth_service.dart';
-
 import 'services/barbershop_service.dart';
 import 'providers/barbershop_provider.dart';
+import 'screens/signin.dart';
+import 'screens/signup.dart';
+import 'screens/home.dart';
 
 void main() {
-  final apiClient = ApiClient(baseUrl: 'http://10.0.2.2:8000');
+  final apiClient = ApiClient(baseUrl: 'http://bookhair.calcularnota.com.br');
   final authService = AuthService(apiClient);
   final barbershopService = BarbershopService(apiClient);
 
   runApp(
     MultiProvider(
       providers: [
+        Provider<ApiClient>.value(value: apiClient),
+
         ChangeNotifierProvider(create: (_) => AuthProvider(authService)),
+
         ChangeNotifierProvider(
           create: (_) => BarbershopProvider(barbershopService)..load(),
         ),
