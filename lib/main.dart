@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'screens/agendar_servico.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'data/constants/colors.dart';
 import 'core/api_client.dart';
@@ -40,6 +42,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BookHair',
       debugShowCheckedModeBanner: false,
+      locale: const Locale('pt', 'BR'),
+      supportedLocales: const [Locale('pt', 'BR')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       theme: ThemeData(
         fontFamily: 'Poppins',
         useMaterial3: true,
@@ -50,7 +59,7 @@ class MyApp extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: AppColors.slate500),
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: DialogThemeData(
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -62,6 +71,7 @@ class MyApp extends StatelessWidget {
         '/': (_) => const SignInScreen(),
         '/signup': (_) => const SignUpScreen(title: 'Crie sua conta'),
         '/home': (_) => const HomeScreen(),
+        '/agendar': (_) => AgendarServicoScreen(),
       },
     );
   }
