@@ -169,22 +169,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   String _getBaseUrl() {
-    try {
-      // Tenta detectar se está rodando na web
-      if (html.window.location.hostname == 'localhost' || 
-          html.window.location.hostname == '127.0.0.1') {
-        return 'http://localhost:8000';
-      }
-      // Se não estiver na web, tenta detectar Android
-      if (Platform.isAndroid) {
-        return 'http://10.0.2.2:8000';
-      }
-    } catch (e) {
-      // Se der erro ao acessar Platform, assume que está na web
-      return 'http://localhost:8000';
-    }
-    // Fallback para localhost
-    return 'http://localhost:8000';
+    // Using the new API domain
+    return 'http://bookhair.calcularnota.com.br';
   }
 
   void _showError(String message) {
