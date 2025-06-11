@@ -7,6 +7,7 @@ import '../services/service_service.dart';
 import '../providers/service_provider.dart';
 import '../services/professional_service.dart';
 import '../providers/professional_provider.dart';
+import '../screens/agendarservico.dart';
 
 import '../components/service_item.dart';
 import '../components/button.dart';
@@ -245,6 +246,7 @@ class _BarbershopView extends StatelessWidget {
                           (s) => ServiceItem(
                             name: s.name,
                             price: s.formattedPrice,
+                            serviceId: s.id,
                           ),
                         ),
 

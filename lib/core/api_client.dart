@@ -8,6 +8,7 @@ class ApiClient {
   ApiClient({required this.baseUrl});
 
   void setToken(String token) => _token = token;
+  String? get token => _token;
 
   Map<String, String> get _headers {
     final h = {'Content-Type': 'application/json'};
