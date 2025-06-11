@@ -1,3 +1,4 @@
+import 'package:bookhair/data/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -203,9 +204,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF39516B), // azul escuro metálico
-              Color(0xFF5A88A8), // azul médio metálico
-              Color(0xFFB0C4D8), // azul claro acinzentado/metálico
+              AppColors.slate800,
+              AppColors.slate600,
+              AppColors.slate400,
             ],
           ),
         ),
@@ -219,7 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: AppColors.gray50,
                   letterSpacing: 1.2,
                 ),
                 textAlign: TextAlign.center,
@@ -229,7 +230,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.gray50,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(32),
                       topRight: Radius.circular(32),
@@ -248,7 +249,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black87,
+                              color: AppColors.gray900,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -256,7 +257,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'Por favor, insira suas informações abaixo para criar sua conta',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.black54,
+                              color: AppColors.gray600,
                             ),
                           ),
                           const SizedBox(height: 24),
@@ -387,7 +388,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ElevatedButton(
                             onPressed: _isLoading ? null : _signUp,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF5A88A8), // azul médio metálico
+                              backgroundColor: AppColors.slate500,
                               padding: const EdgeInsets.symmetric(vertical: 15),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -399,12 +400,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     width: 20,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.gray50),
                                     ),
                                   )
                                 : const Text(
                                     'Cadastrar',
-                                    style: TextStyle(fontSize: 16, color: Colors.black),
+                                    style: TextStyle(fontSize: 16, color: AppColors.gray50),
                                   ),
                           ),
                           const SizedBox(height: 20),
@@ -425,7 +426,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       },
                                 child: const Text(
                                   'Faça login!',
-                                  style: TextStyle(color: Colors.blue),
+                                  style: TextStyle(color: AppColors.slate700),
                                 ),
                               ),
                             ],
