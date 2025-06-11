@@ -1,9 +1,10 @@
 import 'package:bookhair/components/input.dart';
 import 'package:bookhair/data/constants/colors.dart';
+import 'package:bookhair/models/user.dart';
 import 'package:flutter/material.dart';
 
 class HomeTopBar extends StatelessWidget {
-  const HomeTopBar({super.key});
+  const HomeTopBar({super.key, User? user});
 
   @override
   Widget build(BuildContext context) {

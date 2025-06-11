@@ -1,4 +1,4 @@
-import 'package:bookhair/components/barber_card.dart';
+import 'package:bookhair/models/barber.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,14 +8,12 @@ import '../providers/service_provider.dart';
 import '../services/professional_service.dart';
 import '../providers/professional_provider.dart';
 
-import '../components/service_item.dart';
-import '../components/button.dart';
-import '../components/barber_carousel.dart';
 import '../data/constants/colors.dart';
 import '../models/barbershop.dart';
-import '../models/barber.dart';
+import '../components/button.dart';
+import '../components/service_item.dart';
+import '../components/barber_carousel.dart';
 
-/// Tela de detalhes de uma barbearia, com serviços e profissionais carregados dinamicamente
 class BarbershopScreen extends StatelessWidget {
   final Barbershop barbershop;
 
@@ -50,7 +48,6 @@ class BarbershopScreen extends StatelessWidget {
 
 class _BarbershopView extends StatelessWidget {
   final Barbershop barbershop;
-
   const _BarbershopView({Key? key, required this.barbershop}) : super(key: key);
 
   @override
@@ -62,7 +59,7 @@ class _BarbershopView extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: Column(
         children: [
-          // Imagem de capa + botão de voltar
+          // capa + botão voltar
           Stack(
             children: [
               Image.network(
@@ -96,82 +93,40 @@ class _BarbershopView extends StatelessWidget {
             ],
           ),
 
-          // Conteúdo branco com borda arredondada
+          // corpo branco arredondado
           Expanded(
             child: Transform.translate(
               offset: const Offset(0, -24),
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.fromLTRB(20, 36, 20, 20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
+                padding: const EdgeInsets.fromLTRB(20, 36, 20, 20),
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.only(bottom: 32),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Nome + status
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              barbershop.name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: AppColors.gray950,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.green.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Text(
-                              'Aberto',
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ],
+                      // Nome, endereço e avaliação
+                      Text(
+                        barbershop.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: AppColors.gray900,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        barbershop.address,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: AppColors.gray400,
+                        ),
                       ),
                       const SizedBox(height: 8),
-
-                      // Endereço
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on_outlined,
-                            size: 16,
-                            color: AppColors.slate500,
-                          ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              barbershop.address,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: AppColors.gray400,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-
-                      // Avaliação
                       Row(
                         children: [
                           const Icon(
@@ -190,9 +145,9 @@ class _BarbershopView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
 
-                      // Ações
+                      // Ações: chat, ligar, mapa, compartilhar
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
@@ -226,7 +181,7 @@ class _BarbershopView extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 24),
 
-                      // Serviços
+                      // Serviços dinâmicos
                       const Text(
                         'Serviços',
                         style: TextStyle(
@@ -247,10 +202,9 @@ class _BarbershopView extends StatelessWidget {
                             price: s.formattedPrice,
                           ),
                         ),
-
                       const SizedBox(height: 24),
 
-                      // Profissionais
+                      // Profissionais usando seu component BarberCarousel
                       const Text(
                         'Profissionais',
                         style: TextStyle(
@@ -277,7 +231,6 @@ class _BarbershopView extends StatelessWidget {
                                     ),
                                   )
                                   .toList(),
-                          variant: BarberCardVariant.showcase,
                         ),
                     ],
                   ),
